@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <h1>Question</h1> Given strings, count the no. of vowels without repetitions.
+ * <h1>Question</h1> Given strings, count the no. of vowels (including repetitions).
  *
  */
 public class VowelsCount {
@@ -41,7 +41,7 @@ public class VowelsCount {
 	 */
 	private static int vowCountRgx(String s) {
 		s = s.replaceAll("#", "");
-		s = s.replaceAll("[aeiou]{1,1}", "#");
+		s = s.replaceAll("[aeiou]", "#");	// or "[aeiou]{1,1}"
 		int count = 0;
 		for (char c : s.toCharArray())
 			if (c == '#')
