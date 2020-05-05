@@ -1,0 +1,36 @@
+
+Link to source: https://stackoverflow.com/questions/2126137/regex-lookahead-ordering
+
+It's easier to show in an example than explain, I think. Let's take this regex:
+
+(?<=\d)(?=(.)\1)(?!p)\w(?<!q)
+What this means is:
+
+(?<=\d) - make sure what comes before the match position is a digit.
+(?=(.)\1) - make sure whatever character we match at this (same) position is followed by a copy of itself (through the backreference).
+(?!p) - make sure what follows is not a p.
+\w - match a letter, digit or underscore. Note that this is the first time we actually match and consume the character.
+(?<!q) - make sure what we matched so far doesn't end with a q.
+All this will match strings like abc5ddx or 9xx but not 5d or 6qq or asd6pp or add. Note that each assertion works independently. It just stops, looks around, and if all is well, allows the matching to continue.
+
+Note also that in most (probably all) implementations, lookbehinds have the limitation of being fixed-length. You can't use repetition/optionality operators like ?, *, and + in them. This is because to match a pattern we need a starting point - otherwise we'd have to try matching each lookbehind from every point in the string.
+
+A sample run of this regex on the string a3b5ddx is as follows:
+
+Text cursor position: 0.
+Try to match the first lookbehind at position -1 (since \d always matches 1 character). We can't match at negative indices, so fail and advance the cursor.
+Text cursor position: 1.
+Try to match the first lookbehind at position 0. a does not match \d so fail and advance the cursor again.
+Text cursor position: 2.
+Try to match the first lookbehind at position 1. 3 does match \d so keep the cursor intact and continue matching.
+Try to match the first lookahead at position 2. b matches (.) and is captured. 5 does not match \1 (which is the captured b). Therefore, fail and advance the cursor.
+Text cursor position: 3.
+Try to match the first lookbehind at position 2. b does not match \d so fail and advance the cursor again.
+Text cursor position: 4.
+Try to match the first lookbehind at position 3. 5 does match \d so keep the cursor intact and continue matching.
+Try to match the first lookahead at position 4. d matches (.) and is captured. The second d does match \1 (which is the first captured d). Allow the matching to continue from where we left off.
+Try to match the second lookahead. b at position 4 does not match p, and since this is a negative lookahead, that's what we want; allow the matching to continue.
+Try to match \w at position 4. b matches. Advance cursor since we have consumed a character and continue. Also mark this as the start of the match.
+Text cursor position: 5.
+Try to match the second lookbehind at position 4 (since q always matches 1 character). d does not match q which is what we want from a negative lookbehind.
+Realize that we're at the end of the regex and report success by returning the substring from the start of the match to the current position (4 to 5), which is d.
