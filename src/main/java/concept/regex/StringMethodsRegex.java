@@ -16,7 +16,7 @@ public class StringMethodsRegex {
 
 	public static void main(String[] args) {
 		
-		// matches("regx")
+		// matches("regx") can be used to validate email address like below:
 		String regx = "^[a-zA-Z][a-zA-Z0-9_]*@[a-zA-Z0-9]+\\.[a-zA-Z]+";
 		System.out.println("greenstar180@gmail.com".matches(regx));		// true
 		System.out.println("180greenstar@gmail.com".matches(regx));		// false

@@ -95,7 +95,7 @@ public class RegexLookArounds {
 	 */
 	private static void LookBehind() {
 		
-		String emailIds[] = { "amans77@gmail.com", "aman.soni@gmail.com", "green.star@yahoo.co", 
+		String emailIds[] = { "amans77@gmail.com", "77amans@gmail.com", "aman.soni@gmail.com", "green.star@yahoo.co", 
 				"amansoni@wiki.org", "aman@lenovo", "aman@.com", "aman.soni.com"};
 		
 		String regex = "(?<=@\\w{1,10}\\.)\\w{1,3}";	// where \w{1,3} is our main pattern that we intend to match i.e.. 
@@ -207,10 +207,19 @@ public class RegexLookArounds {
 		// exception on pattern compile. To get around this we use variable length construct with fixed lengths provided.
 		// So we replace (?<!\W.*) with (?<!\W.{0,100})
 		
+		// decoding (?<!\\W.{0,100})\\.
+		// (?<!X) is negative look behind construct which will ignore match if found X pattern where X = \\W.{0,100}
+		// \\W will consume a non word character
+		// .{0,100} since dot '.' means consume any character. This pattern means to consume all characters at max 100
+		// after a non word character consumed before. This is done so as to consume the characters and establish a match.
+		// \\. means followed by a literal dot '.'
+		// Limitation: this regex will fail to validate file names beyond 101 characters. Lets say if we have a file name
+		// starting with '-a-' followed by 100 more 'a's then this regex won't work. 
+		
 		/*
 		 * [IMP] Note: this is a good example where the above pattern works perfectly and as expected in Java program but doesn't
 		 * work in regex101.com. As pointed out in the positive look behind also that the look behind pattern doesn't support meta
-		 * character like * + ? so this results in the inconsistency in the results among Java and regex101.
+		 * characters like * + ? so this results in the inconsistency in the results among Java and regex101.
 		 * 
 		 * Moreover, this inconsistency is also due to the fact that the regex pattern is interpreted in regex101 while in Java
 		 * the regex pattern in compiled which makes the Java regex highly accurate.
