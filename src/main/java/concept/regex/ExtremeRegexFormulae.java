@@ -14,32 +14,34 @@ import java.util.regex.Pattern;
  * Few in-built negate classes are: \W = [^\w], \S = [^\s], \D = [^\d], \B = [^\b]
  * Note: negate character class can only be used to negate characters but if you wish to negate words then use negative look arounds.
  *
+ * Non-Greedy: Repetition quantifiers in regex by default are greedy which means they try to match as many reps as possible. To 
+ * change this default behavior from greedy to non-greedy we use another quantifier which is also called reluctant/lazy/non-greedy
+ * quantifier denoted by '?'.
+ * Note: Is also applicable to optional quantifier '?'. A non-greedy optional quantifier would look like this '(regex)??'.
+ * Though it seems as it doesn't have any practical use.
+ *
  */
 public class ExtremeRegexFormulae {
 
 	public static void main(String[] args) {
 		
 		// Example usage of word boundaries \b and \B
-		wordBoundary();
+		//wordBoundary();
 		
 		// Example usage of negate character class and technique to negate words
 		//negateSet();
 		
-		/*
-		 * non-capturing
-		 */
+		// Example usage of non-greedy quantifier with repetition quantifiers
+		nonGreedy();
 		
-		// (?>) - atomic group
-		
-		/*greedy non-greedy
-		 * https://stackoverflow.com/questions/3075130/what-is-the-difference-between-and-regular-expressions
-		 * \d{1,3}?
-		 */
-
 		/*
 		 * powerful use of back reference
 		 */
 		
+		/*
+		 * named groups and their back reference usage
+		 */
+
 		/*find duplicates
 		 * 
 		 * refer: https://www.youtube.com/watch?v=87PJH2cJLX0
@@ -156,6 +158,36 @@ public class ExtremeRegexFormulae {
 		}
 	}
 
+	/**
+	 * Given HTML tag find content of its anchor.
+	 * 
+	 * Given binary string find the least binary substring surrounded with '1's such that whole string is 4 to 8 bits.
+	 */
+	private static void nonGreedy() {
+		String htmlTag= "<a div='preface' href='link to source'></a>";
+		String regex1 = "<.*>";		// default/greedy regex with '*' repetition quantifier
+		String regex2 = "<.*?>";	// non-greedy regex with '*' repetition quantifier
+		Matcher matcher1 = Pattern.compile(regex1).matcher(htmlTag);
+		Matcher matcher2 = Pattern.compile(regex2).matcher(htmlTag);
+		if(matcher1.find() && matcher2.find()) {
+			System.out.println(matcher1.group());	// problem here is that it catches both start and end tags.
+			System.out.println(matcher2.group());	// problem solved here by using non-greedy to match as less as possible.
+		}
+		
+		
+		String binary = "101010010001000";
+		regex1 = "1(1|0){2,6}1";	// default/greedy regex with '{m,n}' repetition quantifier
+		regex2 = "1(1|0){2,6}?1";	// non-greedy regex with '{m,n}' repetition quantifier
+		// consider using non-capturing group for above regex like: "1(?:1|0){2,6}1" and "1(?:1|0){2,6}?1"
+		matcher1 = Pattern.compile(regex1).matcher(binary);
+		matcher2 = Pattern.compile(regex2).matcher(binary);
+		if(matcher1.find() && matcher2.find()) {
+			System.out.println(matcher1.group());	// problem here is that it doesn't catch least. It goes for max match.
+			System.out.println(matcher2.group());	// problem solved here by using non-greedy to match as less as possible.
+		}
+	}
 
-
+	
+	
+	
 }
