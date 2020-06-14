@@ -124,7 +124,17 @@ public class BitSetDemo {
 		System.out.println();
 		
 		/*
-		 * Observe that for given 0-4 the bits flipped are 0-3
+		 * [IMPORTANT] Observe that for given 0-4 the bits flipped are 0-3
+		 */
+		
+		/*
+		 * XOR has special properties and is the most asked in programming.
+		 * Say we have input bit set inpB then:
+		 * inpB XOR with 0 is reflexive. Meaning, the output will be exact same set of bits as input.
+		 * inpB XOR with 1 is toggle. Meaning, the output will have all the bits toggled in input.
+		 * 
+		 * A bit XOR itself is 0. Meaning, the output is 0 if the bits are same. Matching.
+		 * A bit XOR complement of itself is 1. Meaning, the output is 1 if the bits are different. Non-matching.
 		 */
 		
 		System.out.println("----------------------------------------------");
