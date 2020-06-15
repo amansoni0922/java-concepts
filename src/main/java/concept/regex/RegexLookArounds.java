@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * Refer example by Max Shawabkeh in https://stackoverflow.com/questions/2126137/regex-lookahead-ordering
  * 
  * If your specific match depends on the string that follows the match then we use LookAhead.
- * If your specific match depends on the string before the match then we use LookBehind.
+ * If your specific match depends on the string that precedes the match then we use LookBehind.
  * 
  * Look-Around constructs:			Negative form:
  * Look-Ahead 	=>	 (?=regex)		(?!regex) 
@@ -46,13 +46,13 @@ public class RegexLookArounds {
 	public static void main(String[] args) {
 		
 		// look ahead example
-		//LookAhead();
+		LookAhead();
 		
 		// look behind example
-		//LookBehind();
+		LookBehind();
 		
 		// negative look ahead example
-		//NegativeLookAhead();
+		NegativeLookAhead();
 		
 		// negative look behind example
 		NegativeLookBehind();
@@ -129,7 +129,7 @@ public class RegexLookArounds {
 	 * Given a list of file names determine if a file is a non-image file. If its a non-image file then print the file name.
 	 * Consider jpeg and jpg to be the only image file formats remaining all as non-image files.
 	 * 
-	 * Negative Look Ahead syntax is: X(?!Y), it means "search X, but only if not followed by Y".
+	 * Negative Look Ahead syntax is: X(?!Y), it means "search X, but only if NOT followed by Y".
 	 */
 	private static void NegativeLookAhead() {
 		String fileNames[] = { "avengers.mov", "sunrise.jpeg", "tulips.jpg", "recording123.mp4", 
@@ -181,8 +181,8 @@ public class RegexLookArounds {
 		System.out.println("--------------");
 		
 		matcher.usePattern(Pattern.compile(regex2, Pattern.MULTILINE));
-		matcher.reset();	// this is essentially used to reset the position of the matcher's find() back to start
-		while (matcher.find())
+		matcher.reset();	// this is essentially used to reset the position of the matcher's find() back to start and
+		while (matcher.find())	// reset few other parameters used by Matcher class internally ex: group counts.
 		    System.out.println(matcher.group());
 	}
 	
@@ -192,7 +192,7 @@ public class RegexLookArounds {
 	 * underscore followed by '.' followed by extension name of length 3 or 4. Extension name comprise of letters or digits.
 	 * If a file name is valid then print its extension with '.' preceding it.
 	 * 
-	 * Negative look Behind syntax is: (?<!Y)X, matches X, but only if there’s no Y before it.
+	 * Negative look Behind syntax is: (?<!Y)X, matches X, but only if there’s NO Y before it.
 	 */
 	private static void NegativeLookBehind() {
 		String fileNames[] = {"avengers.mov", "troy.movie", "video.mpeg", "sunrise.jpeg", "tulips.jpg", "recording123.mp4",

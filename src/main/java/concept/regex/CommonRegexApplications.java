@@ -7,6 +7,11 @@ public class CommonRegexApplications {
 
 	public static void main(String[] args) {
 		
+		// validate
+		/*
+		 * is the most common use of regex. achieved in Java using the matches() method from classes String or Pattern or Matcher.
+		 */
+		
 		// find and replace
 		csvToTsv();
 		
@@ -20,7 +25,7 @@ public class CommonRegexApplications {
 		/*
 		 * Regex Limitations:
 		 * 1. Overlapping pattern: Not possible to find overlapping pattern with pure regex. Support from programming language is needed
-		 * 		to reset the regex cursor after every successful match. There is no way to indicate to regex regex to reset the cursor
+		 * 		to reset the regex cursor after every successful match. There is no way to indicate to regex to reset the cursor
 		 * 		back to second position of last matched.
 		 * 		References:
 		 * 			-> https://stackoverflow.com/questions/20833295/how-can-i-match-overlapping-strings-with-regex/47184193
@@ -32,7 +37,7 @@ public class CommonRegexApplications {
 		 * 			https://medium.com/analytics-vidhya/coding-the-impossible-palindrome-detector-with-a-regular-expressions-cd76bc23b89b
 		 * 
 		 * 3. Except Nth occurrence: This might not have a big time real life application but no harm in a mention as this is also a 
-		 * 		consequence of finite set automata which means this case is also possible only we know the upper bound that is if we know
+		 * 		consequence of finite set automata which means this case is also possible only if we know the upper bound that is if we know
 		 * 		the total number of occurrences. Otherwise, this also requires support from programming language.
 		 * 
 		 * 4. Conditional Regex: Java flavor for regex doesn't support conditional regex. Java is a high level programming language and
@@ -54,7 +59,7 @@ public class CommonRegexApplications {
 		
 		// In such cases a simpler way would be to use the String replaceAll method. String replaceAll doesn't support Func Interface.
 		tsv = csv.replaceAll(",", "\t");
-		System.out.println("using String: " + tsv);
+		System.out.println("using String: " + tsv + "\n");
 	}
 	
 	/**
@@ -66,7 +71,10 @@ public class CommonRegexApplications {
 		
 		Matcher matcher = Pattern.compile(regex).matcher(text);
 		String correctedText = matcher.replaceAll(m -> m.group().toUpperCase());	// replace matched sequence by upper case of group
-		System.out.println(correctedText);											// of matched.
+		System.out.println(correctedText);											// that matched.
+		
+		System.out.println(text.replaceAll(regex, "$1".toUpperCase()) + "\n"); // won't work as captured reference are read-only that too
+																		// can be read only by regex engine and not programming language.
 	}
 	
 	/**
@@ -77,7 +85,7 @@ public class CommonRegexApplications {
 		
 		String regex = "[A-Z]?([a-z]+|\\d+)";	// the idea is to capture each word as a match and then call lower case on it.
 		Matcher matcher = Pattern.compile(regex).matcher("");	// initialize empty matcher whenever matcher is being reset in loop.
-		
+		System.out.println("---------Java to Python---------");
 		for(String s: funcNames) {
 			matcher.reset(s);
 			StringBuilder sb = new StringBuilder("");
@@ -85,7 +93,7 @@ public class CommonRegexApplications {
 				sb = sb.append("_").append(matcher.group().toLowerCase());
 			}
 			sb.deleteCharAt(0);	// delete the extra "_" at the beginning of sb
-			System.out.println(sb);
+			System.out.println(s + " --------- " + sb);
 		}
 	}
 	

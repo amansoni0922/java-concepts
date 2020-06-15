@@ -9,9 +9,10 @@ said concepts.
 Table of contents:
 
 I. General Techniques
-1. Regex
-2. Recursion
-3. 
+1. Bit Manipulation
+2. Regex
+3. Recursion
+4. Time Complexities
 
 II. Advance Techniques 
 1. File IO
