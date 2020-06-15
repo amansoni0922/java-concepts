@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * 						lambda expression in replaceFirst() and replaceAll(). Ex: matcher.replaceAll(m -> m.group().toUpperCase());
  * 
  * Word Boundary: Boundary matchers like '^' '$' and '\b' are called anchors which means they result in zero-length match.
- * Any place where a word character is adjacent to non-word character is called a word boundary where word characters are defined by
+ * Any place where a word character is adjacent to a non-word character then that's a word boundary where word characters are defined by
  * the word character class \w. This means '^' and '$' are special cases of \b. In Java, \b is backspace character so for regex
  * we use \\b or \\B. Negation of \b is \B which means all the places where a word character is adjacent to another word character
  * is qualified as \B.
@@ -29,14 +29,14 @@ import java.util.regex.Pattern;
  *
  * Non-Greedy: Repetition quantifiers in regex by default are greedy which means they try to match as many reps as possible. To 
  * change this default behavior from greedy to non-greedy we use another quantifier which is also called reluctant/lazy/non-greedy
- * quantifier denoted by '?'.
+ * quantifier denoted by '?'. Greedy tries to match as much as possible whereas non-greedy tries to match as less as possible.
  * Note: Is also applicable to optional quantifier '?'. A non-greedy optional quantifier would look like this '(regex)??'.
  * Though it seems as it doesn't have any practical use.
  *
  * Back-References: There are times when we want to capture a pattern using regex and would like to check for the existence of the same
  * pattern ahead in the given string. This can be achieved by simply repeating the regex in the pattern. For ex: look for digits in the
  * given string for which the regex would be "(\d+).+(\d+)". But there are times when we would like to capture the occurrence of the 
- * exact string literal that matched the regex. For this, regex provides the feature to backreference a match where match will be enclosed
+ * exact string literal that matched the regex. For this, regex provides the feature to back-reference a match where match will be enclosed
  * in a capturing group. For ex: look for digits and if the exact digits are repeated and for which regex would be "(\d+).+(\1)".
  * 
  * Regex Variables: There are times when we would like replace some or all string with the exact literal that has been matched by our
@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
  * group. These are also called captured reference variables. These variables are read-only regex variables and so the content of $N 
  * cannot be accessed by Java but only regex.
  * 
- * Named Group: Regex has its own memory where it stores the capturing group. As we know by now there captured grouped can be referenced
+ * Named Group: Regex has its own memory where it stores the capturing group. As we know by now the captured groups can be referenced
  * for replacement or can be back-referenced using the numbers. But regex also provides a more neat way for doing so using the naming
  * groups. Regex can have a capturing group with name for which syntax is (?<'name'>regex). Though this will require more regex memory
  * but if space is not an issue and regex pattern clarity is priority then one must use named groups. Named group can be back-referenced
@@ -56,31 +56,31 @@ public class ExtremeRegexFormulae {
 	public static void main(String[] args) {
 		
 		// Example usage of word boundaries \b and \B
-		//wordBoundary();
+		wordBoundary();
 		
 		// Example usage of negate character class and technique to negate words
-		//negateSet();
+		negateSet();
 		
 		// Example usage of non-greedy quantifier with repetition quantifiers
-		//nonGreedy();
+		nonGreedy();
 		
 		// Examples of back-references
-		//backReferences();
+		backReferences();
 		
 		// Examples of captured-references aka regex variables in Java
-		//capturedReferences();
+		capturedReferences();
 		
 		// Named groups and its application in back-reference and captured-reference
-		//namedGroups();
+		namedGroups();
 		
 		// Example for replace of just first match and all except first match
-		//justFirstMatched();
+		justFirstMatched();
 		
 		// Example for replace of just last match and all except last match
-		//justLastMatched();
+		justLastMatched();
 		
 		// Example for replacing Nth match and replacing everything except Nth match
-		//nthMatched();
+		nthMatched();
 		
 	}
 
@@ -173,7 +173,7 @@ public class ExtremeRegexFormulae {
 	/**
 	 * Given HTML tag find content of its anchor.
 	 * 
-	 * Given binary string find the least binary substring surrounded with '1's such that whole string is 4 to 8 bits.
+	 * Given binary string find the least binary substring surrounded with '1's such that whole string is 4 to 8 bits long.
 	 */
 	private static void nonGreedy() {
 		String htmlTag= "<a div='preface' href='link to source'></a>";
@@ -244,7 +244,7 @@ public class ExtremeRegexFormulae {
 		String statement = "This is is a sample statement for very very simple regex example usage and and demo program.";
 		String regex = "\\b(\\w+)\\s\\1";	// notice here we capture exactly one group and later we reference that group using $1
 		String correctedStmt = statement.replaceAll(regex, "$1");	// in the given string we match "someword sameword" and replace the
-		System.out.println("Corrected Statement: " + correctedStmt);// match with just "someword" by referencing using $1. This happens 
+		System.out.println("\nCorrected Statement: " + correctedStmt);// match with just "someword" by referencing using $1. This happens 
 																	// at every match in the given string and there are 3 such matches.
 		
 		
@@ -298,7 +298,7 @@ public class ExtremeRegexFormulae {
 		regex = "\\b(?<original>\\w+)\\s\\k<original>";
 		String correctedStmt = statement.replaceAll(regex, "${original}");	// captured-reference using group name syntax is ${'name'}
 		System.out.println("----Corrected Statement----");
-		System.out.println(correctedStmt);
+		System.out.println(correctedStmt + "\n");
 	}
 	
 	private static void justFirstMatched() {
@@ -310,7 +310,7 @@ public class ExtremeRegexFormulae {
 										// group and the first match in another group and then discard this matched group. Since the regex
 										// requires beginning of the line to be consumed in one group so no other occurrences'll b matched
 		String result = sampleStr.replaceAll(regex, "$1XX");
-		System.out.println(result);
+		System.out.println("Just First:\t" + result);
 		
 		// replace all except the first number with XX
 		regex = "(^.*?\\d+)?(.*?)(\\d+)";	// three groups where group1 being optional which means $1 may be empty string.
@@ -319,7 +319,7 @@ public class ExtremeRegexFormulae {
 											// where one will consume the literals between two consecutive match and another will be the 
 											// match that needs to be replaced.
 		result = sampleStr.replaceAll(regex, "$1$2XX");
-		System.out.println(result);
+		System.out.println("Except First:\t" + result + "\n");
 	}
 	
 	private static void justLastMatched() {
@@ -331,16 +331,16 @@ public class ExtremeRegexFormulae {
 												// set of digits. Consume the set of digits in another group and then consume remaining
 												// string in another group and then discard the group that has digits.
 		String result = sampleStr.replaceAll(regex, "$1XX$3");
-		System.out.println(result);
+		System.out.println("Just Last:\t" + result);
 		
 		// replace all except the last number with XX
 		regex = "(\\d+)(?=.*\\d{2})";	// using positive look ahead to assert that a set of digits occurs in string anywhere ahead.
 		result = sampleStr.replaceAll(regex, "XX");
-		System.out.println(result);
+		System.out.println("Except Last:\t" + result + "\n");
 	}
 	
 	private static void nthMatched() {
-		String sampleStr = "Marcelo-12 Modric-10 Ronaldo-07 Ramos-04 Kroos-08 Casemiro-14 Madrid";
+		String sampleStr = "Marcelo-12 Modric-10 Ronaldo-07 Ramos-04 Kroos-08 Casemiro-14 Benz-09 Dani-02 Zidane-00 Varane-05 Madrid";
 		
 		// replace the number at 4th occurrence with XX.
 		String regex = "((?:.*?\\d+){3})(.*?)(\\d+)(.*$)";	// total five groups of which one is non-capturing. discard $3.
@@ -355,24 +355,24 @@ public class ExtremeRegexFormulae {
 		 * (.*$)			=> and lastly consume everything after the last matched which was 4th to the end of the string in a group.
 		 */
 		String result = sampleStr.replaceAll(regex, "$1$2XX$4");
-		System.out.println(result);
+		System.out.println("Hardcoded regex:\t" + result);
 		
 		// given N, replace at Nth position.
-		int N = 4;	// given
+		int N = 7;	// given
 		String strN = String.valueOf(N-1);	// Note: String.valueOf(N) internally uses Integer.toString(N) so there is no difference
 											// performance wise but one should use String.valueOf(x) so that later if tpye of x is changed
 											// from int to any other say boolean then you don't need to make any change here.
 		String buildRegex = "((?:.*?\\d+){" + strN + "})(.*?)(\\d+)(.*$)";
-		String res = sampleStr.replaceAll(buildRegex, "$1$2XX$4");
-		System.out.println(res);
+		String res = sampleStr.replaceAll(buildRegex, "$1$2XX$4");	// Note: this is related to number of groups in regex and not N thus can
+		System.out.println("Built regex:\t\t" + res);				// be hardcoded as far as regex groups are fixed.
 		
-		// replace all except 4th occurrence
+		// replace all except Nth occurrence
 		/*
 		 * Not possible with pure regex and will require support from programming language.
-		 * Possible only if the exact number of total occurrences is known.
+		 * Possible only if the exact number of TOTAL occurrences are known.
 		 */
-		// Following is a way to replace all except nth occurrence with programming language support
-		// N = 4, given above
+		// Following is a way to replace all except Nth occurrence with programming language support
+		// N, given above
 		// sampleStr, given above
 		regex = "(\\d+)";
 		Matcher matcher = Pattern.compile(regex).matcher(sampleStr);
@@ -380,11 +380,11 @@ public class ExtremeRegexFormulae {
 		StringBuilder sb = new StringBuilder();
 		while (matcher.find()) {
 			count++;
-			if(count!=N) {
+			if(count!=N) {	// logic for "all except N"
 				matcher.appendReplacement(sb, "XX");	// this method keeps adding the main string to sb as it is and replaces the 
-			}											// matched group with given "XX".
+			}											// matched group with given "XX". We changed regex to simple one for this approach.
 		}
 		matcher.appendTail(sb);						// and finally after the last group match the remaining main string is appended here
-		System.out.println(sb);
+		System.out.println("Except Nth:\t\t" + sb);
 	}
 }

@@ -7,7 +7,7 @@ import java.util.BitSet;
  * BitSet is an in-built Java library to store, manipulate and operate over bits more efficiently and provides in-built methods
  * for bit operations. This class implements an array of bits that grows as needed. Each component of the bit set has a boolean 
  * value. The bits of a BitSet are indexed by nonnegative integers. Individual indexed bits can be examined, set, or cleared. 
- * One BitSet may be used to modify the contents of another BitSet through logical AND, logical inclusive OR, and logical 
+ * One BitSet may be used to modify the contents of another BitSet through logical AND, logical inclusive OR and logical 
  * exclusive OR operations (XOR). By default, all bits in the set initially have the value false.
  * 
  * Length vs Size in BitSet:
@@ -17,6 +17,10 @@ import java.util.BitSet;
  * 
  * A good replacement for boolean arrays.
  * Reference: https://stackoverflow.com/questions/605226/boolean-vs-bitset-which-is-more-efficient
+ * 
+ * One should consider using BitSet when:
+ * 1. Bit operations and manipulations are needed.
+ * 2. Boolean arrays. (BitSet is memory efficient as compared to boolean but is not time efficient)
  */
 public class BitSetDemo {
 
@@ -32,7 +36,7 @@ public class BitSetDemo {
 		System.out.println("Length of bs is: " + bs.length()); // of course we are expecting 0 to be the length of bs
 		
 		// Lets see how much memory it occupied:
-		System.out.println("Size: " + bs.size() / 8 + " Bytes");
+		System.out.println("Size: " + bs.size() / 8 + " Bytes");	// JVM allocates 8 Bytes by default to BitSet object
 		
 		System.out.println("----------------------------------------------");
 		

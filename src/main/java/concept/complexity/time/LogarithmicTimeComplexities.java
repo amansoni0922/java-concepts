@@ -44,6 +44,7 @@ public class LogarithmicTimeComplexities {
 		 * Here, the loop variable is being multiplied by 5. So here the code-block will run once for i=1 and then will run for every
 		 * fifth multiple until it reaches or crosses N. Which gives run-time = 1 + log of N to base 5 = 1 + 2.8613 = 3.8613 = 3
 		 * (truncate fractional part). So time complexity = highly growing variable in (1 + log of N to base 5) = log N to base 5.
+		 * 
 		 * Now using different log bases for time complexity will make it difficult to make a comparison. So we convert the base 5 to 2.
 		 * log N to base 5 = (log N to base 2) * (log 2 to base 5). Here, (log 2 to base 5) is a fixed constant value = 0.4306 so we
 		 * drop it and finally the complexity can be written as just logN (log N to base 2).

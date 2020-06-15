@@ -9,14 +9,14 @@ package concept.complexity.time;
  * 
  * Thats where the concept of run-time complexities comes in. In computer science run-time complexities or in short time complexities
  * for a given code tells you how the run time grows as the size of the input grows. In simple words, it tells you the relation between
- * the input N and run-time T where T is not in seconds but T just means the number of repetition of a code block aka iterations. 
+ * the input N and run-time T where T is not in seconds but T just means the number of repetitions of a code block aka iterations. 
  * This relation between T and N are proportional which means as N grows then T also grows in proportion according to the relation. It 
- * doesn't tell anything about time in seconds it will take aka execution time and is independent of any external factors like machine 
+ * doesn't tell anything about time in seconds it will take aka execution time and T is independent of any external factors like machine 
  * or programming language. Time complexity T is measured in iterations whereas execution time R or ET is measured in milliseconds.
  * 
  * Common run-time complexities in order of their performance are:
  * Time Complexity			Name			Example
- * 		O(1)			Constant			HashMap
+ * 		O(1)			Constant			HashMap(Average case)
  * 		O(logN) 		Logarithmic			Binary Search
  * 		O(N) 			Linear				Linear Search 
  * 		O(NlogN) 		Linearithmic		Merge Sort
@@ -27,7 +27,7 @@ package concept.complexity.time;
  * 
  * Though there exist many more but not so common like: 
  * => O(N^(1/c)) happens when loop variable is raised to fractional power like square-root, cube-root
- * 				 NT Graph for this one is similar to logarithmic.
+ * 				 NT (input-time) Graph for this one is similar to logarithmic.
  * => log(logN)	 happens when loop variable is raised to non-negative integer power.
  * 
  * => log^cN     happens when individual logarithmic loops are nested. For ex: a loop of logN is nested inside another loop of logN
