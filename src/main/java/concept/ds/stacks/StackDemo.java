@@ -4,9 +4,11 @@ import java.util.Stack;
 
 public class StackDemo {
 
+  @SuppressWarnings("unchecked")
   public static void main(String[] args) {
     
     // Default initialization of Stack
+    @SuppressWarnings("rawtypes")
     Stack stack1 = new Stack();
 
     // Initialization of Stack
