@@ -16,6 +16,7 @@ public class TreeSetProsConsUsage {
 
 		// AVL tree is a special case of RB tree. which implies all AVL trees are RB but not all RB are AVL.
 		// Both are BST. All BST are BT. All BT are Tree. All Trees are graphs.
+	    // AVL -> RB -> BST -> BT -> Tree -> Graph
 		
 		// learn about (non BST binary tree)
 		
